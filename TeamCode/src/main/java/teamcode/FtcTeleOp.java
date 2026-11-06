@@ -268,6 +268,7 @@ public class FtcTeleOp extends FtcOpMode
         switch (button)
         {
             case A:
+                robot.intake.eject();
                 break;
 
             case B:
@@ -298,6 +299,10 @@ public class FtcTeleOp extends FtcOpMode
 
             case RightBumper:
                 setDriveSpeedMode(pressed, driverAltFunc);
+                break;
+
+            case LeftTrigger:
+                robot.intake.intake();
                 break;
 
             case DpadUp:
@@ -339,6 +344,9 @@ public class FtcTeleOp extends FtcOpMode
      * @param button specifies the button that generates the event.
      * @param pressed specifies true if the button is pressed, false otherwise.
      */
+
+    /** Subsystem controls */
+
     public void operatorButtonEvent(FtcGamepad.ButtonType button, boolean pressed)
     {
         if (traceButtonEvents)

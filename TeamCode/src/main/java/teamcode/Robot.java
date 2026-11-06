@@ -34,6 +34,7 @@ import ftclib.sensor.FtcRobotBattery;
 import ftclib.vision.FtcLimelightVision;
 import teamcode.indicators.LEDIndicator;
 import teamcode.subsystems.DriveBase;
+import teamcode.subsystems.Intake;
 import teamcode.vision.Vision;
 import trclib.motor.TrcMotor;
 import trclib.motor.TrcServo;
@@ -77,9 +78,9 @@ public class Robot
     public Vision vision;
     private RelocalizationMode relocalizationMode = RelocalizationMode.Disabled;
     public TrcVisionRelocalize trcVisionRelocalize = null;
-    //
-    // Other subsystems.
-    //
+
+   /* Robot Subsystems */
+    public Intake intake;
 
     //
     // Auto Tasks.
@@ -129,7 +130,7 @@ public class Robot
         {
             if (RobotParams.Preferences.useSubsystems)
             {
-                // Create subsystems.
+                intake = new Intake();
 
                 // Zero calibrate all subsystems only in Auto or if TeleOp is run standalone without prior Auto.
                 // There is no reason to zero calibrate again if Auto was run right before TeleOp.
