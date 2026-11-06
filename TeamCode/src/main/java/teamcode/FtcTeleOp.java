@@ -268,7 +268,11 @@ public class FtcTeleOp extends FtcOpMode
         switch (button)
         {
             case A:
-                robot.intake.eject();
+                if(pressed) {
+                    robot.intake.eject();
+                } else {
+                    robot.intake.stop();
+                }
                 break;
 
             case B:
@@ -302,7 +306,11 @@ public class FtcTeleOp extends FtcOpMode
                 break;
 
             case LeftTrigger:
-                robot.intake.intake();
+                if(pressed){
+                    robot.intake.intake();
+                } else {
+                    robot.intake.stop();
+                }
                 break;
 
             case DpadUp:
