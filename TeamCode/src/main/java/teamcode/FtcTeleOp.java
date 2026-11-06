@@ -31,6 +31,7 @@ import ftclib.driverio.FtcGamepad;
 import ftclib.robotcore.FtcOpMode;
 import teamcode.indicators.RumbleIndicator;
 import teamcode.subsystems.DriveBase;
+import teamcode.subsystems.Intake;
 import teamcode.vision.Vision;
 import trclib.robotcore.TrcDbgTrace;
 import trclib.robotcore.TrcRobot;
@@ -269,9 +270,9 @@ public class FtcTeleOp extends FtcOpMode
         {
             case A:
                 if(pressed) {
-                    robot.intake.eject();
+                    robot.intake.subsystemAction(Intake.Action.EJECT, null);
                 } else {
-                    robot.intake.stop();
+                    robot.intake.subsystemAction(Intake.Action.STOP, null);
                 }
                 break;
 
@@ -306,10 +307,10 @@ public class FtcTeleOp extends FtcOpMode
                 break;
 
             case LeftTrigger:
-                if(pressed){
-                    robot.intake.intake();
+                if(pressed) {
+                    robot.intake.subsystemAction(Intake.Action.INTAKE, null);
                 } else {
-                    robot.intake.stop();
+                    robot.intake.subsystemAction(Intake.Action.STOP, null);
                 }
                 break;
 

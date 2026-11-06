@@ -10,6 +10,7 @@ public class Intake extends TrcSubsystem<Intake.Action> {
 
     public enum Action {
         INTAKE,
+        EJECT,
         STOP
     }
 
@@ -83,9 +84,16 @@ public class Intake extends TrcSubsystem<Intake.Action> {
 
     @Override
     public void subsystemAction(Action action, Object context) {
+        if (action == null) {
+            return;
+        }
+
         switch (action) {
             case INTAKE:
                 intake();
+                break;
+            case EJECT:
+                eject();
                 break;
             case STOP:
                 stop();
