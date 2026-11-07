@@ -62,6 +62,15 @@ public class Shooter extends TrcSubsystem<Shooter.Action> {
         spinShooter(ShooterConstants.IDLE_SPEED);
     }
 
+    private boolean atSpeed(double speed) {
+        return shooter.getShooter().getShooterMotor1Velocity() ==
+                speed;
+    }
+
+    public boolean atShootingSpeed() {
+        return atSpeed(ShooterConstants.SHOOTING_SPEED);
+    }
+
     /** Rev/Sec */
     private void spinShooter(double speed) {
         shooter.getShooter().setShooterMotorVelocity(speed, speed);

@@ -29,9 +29,12 @@ import java.util.Locale;
 import ftclib.drivebase.FtcSwerveBase;
 import ftclib.driverio.FtcGamepad;
 import ftclib.robotcore.FtcOpMode;
+import ftclib.subsystem.FtcRollerIntake;
 import teamcode.indicators.RumbleIndicator;
 import teamcode.subsystems.DriveBase;
+import teamcode.subsystems.Indexer;
 import teamcode.subsystems.Intake;
+import teamcode.subsystems.Shooter;
 import teamcode.vision.Vision;
 import trclib.robotcore.TrcDbgTrace;
 import trclib.robotcore.TrcRobot;
@@ -259,6 +262,14 @@ public class FtcTeleOp extends FtcOpMode
      * @param button specifies the button that generates the event.
      * @param pressed specifies true if the button is pressed, false otherwise.
      */
+
+    public void shoot(boolean pressed, boolean secondPressed) {
+        if(pressed && robot.shooter.atShootingSpeed()) {
+            robot.indexer.subsystemAction(Indexer.Action.INTAKE, null);
+        } else if (secondPressed) {
+            robot.indexer.subsystemAction(Indexer.Action.INTAKE, null);
+        }
+    }
     public void driverButtonEvent(FtcGamepad.ButtonType button, boolean pressed)
     {
         if (traceButtonEvents)
@@ -277,6 +288,56 @@ public class FtcTeleOp extends FtcOpMode
                 break;
 
             case B:
+                break;
+
+            case X:
+                break;
+            case Y:
+                robot.shooter.subsystemAction(Shooter.Action.STOP, null);
+                break;
+
+            case LeftBumper:
+                if(pressed) {
+                    shoot(pressed, true);
+                } else {
+                    robot.indexer.subsystemAction(Indexer.Action.STOP, null);
+                }
+                break;
+
+            case RightBumper:
+                if(pressed) {
+                    shoot(pressed, false);
+                } else {
+                    robot.indexer.subsystemAction(Indexer.Action.STOP, null);
+                }
+                break;
+
+            case LeftTrigger:
+                if(pressed) {
+                    robot.intake.subsystemAction(Intake.Action.INTAKE, null);
+                } else {
+                    robot.intake.subsystemAction(Intake.Action.STOP, null);
+                }
+                break;
+
+            case RightTrigger:
+                if(pressed) {
+                    robot.shooter.subsystemAction(Shooter.Action.SHOOT, null);
+                } else {
+                    robot.shooter.subsystemAction(Shooter.Action.IDLE, null);
+                }
+                break;
+
+            case DpadUp:
+                driverAltFunc = pressed;
+                robot.globalTracer.traceInfo(moduleName, ">>>>> DriverAltFunc=" + driverAltFunc);
+                break;
+            case DpadDown:
+                break;
+            case DpadLeft:
+                setDriveSpeedMode(pressed, driverAltFunc);
+                break;
+            case DpadRight:
                 if (robot.robotDriveBase != null)
                 {
                     if (pressed)
@@ -291,33 +352,6 @@ public class FtcTeleOp extends FtcOpMode
                         }
                     }
                 }
-                break;
-
-            case X:
-            case Y:
-                break;
-
-            case LeftBumper:
-                driverAltFunc = pressed;
-                robot.globalTracer.traceInfo(moduleName, ">>>>> DriverAltFunc=" + driverAltFunc);
-                break;
-
-            case RightBumper:
-                setDriveSpeedMode(pressed, driverAltFunc);
-                break;
-
-            case LeftTrigger:
-                if(pressed) {
-                    robot.intake.subsystemAction(Intake.Action.INTAKE, null);
-                } else {
-                    robot.intake.subsystemAction(Intake.Action.STOP, null);
-                }
-                break;
-
-            case DpadUp:
-            case DpadDown:
-            case DpadLeft:
-            case DpadRight:
                 break;
 
             case Back:

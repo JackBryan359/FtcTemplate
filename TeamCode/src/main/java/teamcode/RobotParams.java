@@ -66,7 +66,7 @@ public class RobotParams
         // Subsystem Switches
         public static final boolean useSubsystems               = true;
         // Drive Base Subsystem
-        public static final boolean useDriveBase                = false;
+        public static final boolean useDriveBase                = true;
         public static final boolean showDriveBaseStatus         = false;
         public static final boolean showPidDrive                = false;
         public static final boolean showDriveBaseGraph          = false;
