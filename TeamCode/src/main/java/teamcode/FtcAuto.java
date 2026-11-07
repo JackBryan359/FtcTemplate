@@ -251,7 +251,7 @@ public class FtcAuto extends FtcOpMode
     //
     // Global objects.
     //
-    public static final AutoChoices autoChoices = new AutoChoices();
+    public static  AutoChoices autoChoices = null;
     private Robot robot;
     private TrcRobot.RobotCommand autoCommand;
 
@@ -266,6 +266,8 @@ public class FtcAuto extends FtcOpMode
     @Override
     public void robotInit()
     {
+
+        autoChoices = new AutoChoices();
         //
         // Create and initialize robot object.
         //
@@ -273,6 +275,8 @@ public class FtcAuto extends FtcOpMode
         //
         // Open trace log.
         //
+
+
         if (RobotParams.Preferences.useTraceLog)
         {
             Robot.matchInfo = FtcMatchInfo.getMatchInfo();

@@ -1,9 +1,6 @@
 package teamcode.subsystems;
 
-import ftclib.subsystem.FtcRollerIntake;
-import ftclib.motor.FtcMotorActuator.MotorType;
 import ftclib.subsystem.FtcShooter;
-import teamcode.constants.IntakeConstants;
 import teamcode.constants.ShooterConstants;
 import trclib.robotcore.TrcEvent;
 import trclib.subsystem.TrcSubsystem;

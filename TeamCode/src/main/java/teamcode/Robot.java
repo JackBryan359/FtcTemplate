@@ -134,13 +134,14 @@ public class Robot
         {
             if (RobotParams.Preferences.useSubsystems)
             {
-                intake = new Intake();
-                shooter = new Shooter();
-                indexer = new Indexer();
+//                intake = new Intake();
+//                shooter = new Shooter();
+//                indexer = new Indexer();
 
                 // Zero calibrate all subsystems only in Auto or if TeleOp is run standalone without prior Auto.
                 // There is no reason to zero calibrate again if Auto was run right before TeleOp.
-                if (runMode == TrcRobot.RunMode.AUTO_MODE || FtcAuto.autoChoices.alliance == null)
+                if (runMode == TrcRobot.RunMode.AUTO_MODE ||
+                        FtcAuto.autoChoices == null || FtcAuto.autoChoices.alliance == null)
                 {
                     zeroCalibrate(null, null);
                 }

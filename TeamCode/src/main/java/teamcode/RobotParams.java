@@ -42,7 +42,7 @@ public class RobotParams
     {
         // Global config
         public static final RobotType robotType                 = RobotType.MecanumRobot;
-        public static final boolean inCompetition               = false;
+        public static final boolean inCompetition               = true;
         public static final boolean useTraceLog                 = true;
         public static final boolean useLoopPerformanceMonitor   = true;
         public static final boolean useBatteryMonitor           = false;

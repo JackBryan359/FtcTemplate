@@ -1,7 +1,5 @@
 package teamcode.constants;
 
-import com.qualcomm.robotcore.hardware.configuration.annotations.MotorType;
-
 import ftclib.motor.FtcDcMotor;
 import ftclib.motor.FtcMotorActuator;
 

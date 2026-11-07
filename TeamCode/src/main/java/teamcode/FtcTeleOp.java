@@ -29,7 +29,6 @@ import java.util.Locale;
 import ftclib.drivebase.FtcSwerveBase;
 import ftclib.driverio.FtcGamepad;
 import ftclib.robotcore.FtcOpMode;
-import ftclib.subsystem.FtcRollerIntake;
 import teamcode.indicators.RumbleIndicator;
 import teamcode.subsystems.DriveBase;
 import teamcode.subsystems.Indexer;
@@ -125,7 +124,7 @@ public class FtcTeleOp extends FtcOpMode
         }
         robot.globalTracer.traceInfo(
             moduleName, "***** Starting TeleOp: " + TrcTimer.getCurrentTimeString() + " *****");
-        robot.dashboard.clearDisplay();
+//        robot.dashboard.clearDisplay();
         //
         // Tell robot object opmode is about to start so it can do the necessary start initialization for the mode.
         //
@@ -257,34 +256,33 @@ public class FtcTeleOp extends FtcOpMode
     //
 
     /**
-     * This method is called when driver gamepad button event is detected.
+     * This method shoots when pressed.
      *
-     * @param button specifies the button that generates the event.
-     * @param pressed specifies true if the button is pressed, false otherwise.
+     * @param pressed specifies true if the shoot button is pressed, false otherwise.
+//     * @param secondPressed specifies true if the secondary button is pressed.
      */
-
-    public void shoot(boolean pressed, boolean secondPressed) {
-        if(pressed && robot.shooter.atShootingSpeed()) {
-            robot.indexer.subsystemAction(Indexer.Action.INTAKE, null);
-        } else if (secondPressed) {
-            robot.indexer.subsystemAction(Indexer.Action.INTAKE, null);
-        }
-    }
+//    public void shoot(boolean pressed, boolean secondPressed) {
+//        if(pressed && robot.shooter.atShootingSpeed()) {
+//            robot.indexer.subsystemAction(Indexer.Action.INTAKE, null);
+//        } else if (secondPressed) {
+//            robot.indexer.subsystemAction(Indexer.Action.INTAKE, null);
+//        }
+//    }
     public void driverButtonEvent(FtcGamepad.ButtonType button, boolean pressed)
     {
         if (traceButtonEvents)
         {
-            robot.globalTracer.traceInfo(moduleName, "##### button=" + button + ", pressed=" + pressed);
+//            robot.globalTracer.traceInfo(moduleName, "##### button=" + button + ", pressed=" + pressed);
         }
-        robot.dashboard.displayPrintf(15, "Driver: " + button + "=" + (pressed? "pressed": "released"));
+//        robot.dashboard.displayPrintf(15, "Driver: " + button + "=" + (pressed? "pressed": "released"));
         switch (button)
         {
             case A:
-                if(pressed) {
-                    robot.intake.subsystemAction(Intake.Action.EJECT, null);
-                } else {
-                    robot.intake.subsystemAction(Intake.Action.STOP, null);
-                }
+//                if(pressed) {
+//                    robot.intake.subsystemAction(Intake.Action.EJECT, null);
+//                } else {
+//                    robot.intake.subsystemAction(Intake.Action.STOP, null);
+//                }
                 break;
 
             case B:
@@ -293,39 +291,39 @@ public class FtcTeleOp extends FtcOpMode
             case X:
                 break;
             case Y:
-                robot.shooter.subsystemAction(Shooter.Action.STOP, null);
+//                robot.shooter.subsystemAction(Shooter.Action.STOP, null);
                 break;
 
             case LeftBumper:
-                if(pressed) {
-                    shoot(pressed, true);
-                } else {
-                    robot.indexer.subsystemAction(Indexer.Action.STOP, null);
-                }
+//                if(pressed) {
+//                    shoot(pressed, true);
+//                } else {
+//                    robot.indexer.subsystemAction(Indexer.Action.STOP, null);
+//                }
                 break;
 
             case RightBumper:
-                if(pressed) {
-                    shoot(pressed, false);
-                } else {
-                    robot.indexer.subsystemAction(Indexer.Action.STOP, null);
-                }
+//                if(pressed) {
+//                    shoot(pressed, false);
+//                } else {
+//                    robot.indexer.subsystemAction(Indexer.Action.STOP, null);
+//                }
                 break;
 
             case LeftTrigger:
-                if(pressed) {
-                    robot.intake.subsystemAction(Intake.Action.INTAKE, null);
-                } else {
-                    robot.intake.subsystemAction(Intake.Action.STOP, null);
-                }
+//                if(pressed) {
+//                    robot.intake.subsystemAction(Intake.Action.INTAKE, null);
+//                } else {
+//                    robot.intake.subsystemAction(Intake.Action.STOP, null);
+//                }
                 break;
 
             case RightTrigger:
-                if(pressed) {
-                    robot.shooter.subsystemAction(Shooter.Action.SHOOT, null);
-                } else {
-                    robot.shooter.subsystemAction(Shooter.Action.IDLE, null);
-                }
+//                if(pressed) {
+//                    robot.shooter.subsystemAction(Shooter.Action.SHOOT, null);
+//                } else {
+//                    robot.shooter.subsystemAction(Shooter.Action.IDLE, null);
+//                }
                 break;
 
             case DpadUp:
@@ -396,7 +394,7 @@ public class FtcTeleOp extends FtcOpMode
         {
             robot.globalTracer.traceInfo(moduleName, "##### button=" + button + ", pressed=" + pressed);
         }
-        robot.dashboard.displayPrintf(15, "Operator: " + button + "=" + (pressed? "pressed": "released"));
+//        robot.dashboard.displayPrintf(15, "Operator: " + button + "=" + (pressed? "pressed": "released"));
         switch (button)
         {
             case A:

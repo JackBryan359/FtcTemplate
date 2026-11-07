@@ -41,7 +41,6 @@ public class Dashboard
     {
         public static boolean updateDashboardEnabled = RobotParams.Preferences.updateDashboard;
         public static FtcAuto.Alliance alliance = FtcAuto.Alliance.Blue;
-        public static FtcAuto.AutoChoices autoChoices = FtcAuto.autoChoices;
     }   //class DashboardParams
 
     @Config
@@ -53,7 +52,7 @@ public class Dashboard
         public static double driveSlowScale = 0.3;
         public static double driveNormalScale = 1.0;
         public static double turnSlowScale = 0.3;
-        public static double turnNormalScale = 0.5;
+        public static double turnNormalScale = 1.0;
     }   //class SubsystemDrivebase
 
     @Config

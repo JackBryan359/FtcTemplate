@@ -168,9 +168,6 @@ public class DriveBase extends TrcSubsystem<DriveBase.Action>
                     FtcMotorActuator.MotorType.DcMotor,
                     new String[] {"flDriveMotor", "frDriveMotor", "blDriveMotor", "brDriveMotor"},
                     new boolean[] {true, false, true, false})
-                .setPinpointOdometry(
-                    "pinpointOdo", 0.0, -24.0 * 8, GoBildaPinpointDriver.GoBildaOdometryPods.goBILDA_4_BAR_POD,
-                    true, true, -180.0, 180.0)
                 .setPidStallDetectionEnabled(true)
                 .setPidDriveParams(false)
                 .setPurePursuitDriveParams(6.0, true, false)
