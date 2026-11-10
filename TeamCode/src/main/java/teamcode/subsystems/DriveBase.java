@@ -54,11 +54,14 @@ public class DriveBase extends TrcSubsystem<DriveBase.Action>
     public enum Action
     {
         ToggleDriveMode,
-        ToggleGyroAssist
+        ToggleGyroAssist,
+        ZeroDriveFieldCentric
     }   //enum Action
 
     public static final String SUBSYSTEM_NAME = "DriveBase";
     private static final boolean NEED_ZERO_CAL = false;
+
+    private static final double DRIVE_ZERO_HEADING = 0.0;
 
     /**
      * When the season starts, the competition robot may not be ready for programmers. It's crucial to save time by
@@ -167,7 +170,11 @@ public class DriveBase extends TrcSubsystem<DriveBase.Action>
                 .setDriveMotorInfo(
                     FtcMotorActuator.MotorType.DcMotor,
                     new String[] {"flDriveMotor", "frDriveMotor", "blDriveMotor", "brDriveMotor"},
-                    new boolean[] {true, false, true, false})
+                    new boolean[] {false, true, true, false})
+                .setIMUInfo(
+                        "imu",
+                        RevHubOrientationOnRobot.LogoFacingDirection.BACKWARD,
+                        RevHubOrientationOnRobot.UsbFacingDirection.LEFT)
                 .setPidStallDetectionEnabled(true)
                 .setPidDriveParams(false)
                 .setPurePursuitDriveParams(6.0, true, false)
@@ -307,8 +314,7 @@ public class DriveBase extends TrcSubsystem<DriveBase.Action>
 
         if (orientation == TrcDriveBase.DriveOrientation.Field)
         {
-            robot.robotBase.driveBase.setFieldForwardHeading(
-                Dashboard.DashboardParams.alliance == FtcAuto.Alliance.Red? 0.0: 180.0);
+            robot.robotBase.driveBase.setFieldForwardHeading(DRIVE_ZERO_HEADING);
         }
 
         if (robot.ledIndicator != null)
@@ -316,6 +322,10 @@ public class DriveBase extends TrcSubsystem<DriveBase.Action>
             robot.ledIndicator.setDriveOrientation(orientation);
         }
     }   //setDriveOrientation
+
+    public void resetDriveBaseHeading() {
+        robot.robotBase.driveBase.resetFieldForwardHeading();
+    }
 
     //
     // Implements TrcSubsystem abstract methods.
@@ -420,6 +430,10 @@ public class DriveBase extends TrcSubsystem<DriveBase.Action>
                     robotBase.driveBase.setGyroAssistEnabled(robotBase.purePursuitDrive.getTurnPidCtrl());
                     robot.globalTracer.traceInfo(instanceName, ">>>>> Enabling GyroAssist.");
                 }
+                break;
+
+            case ZeroDriveFieldCentric:
+                resetDriveBaseHeading();
                 break;
 
             default:

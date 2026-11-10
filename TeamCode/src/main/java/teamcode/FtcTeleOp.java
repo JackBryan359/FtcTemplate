@@ -331,6 +331,7 @@ public class FtcTeleOp extends FtcOpMode
                 robot.globalTracer.traceInfo(moduleName, ">>>>> DriverAltFunc=" + driverAltFunc);
                 break;
             case DpadDown:
+                robot.robotDriveBase.subsystemAction(DriveBase.Action.ZeroDriveFieldCentric, null);
                 break;
             case DpadLeft:
                 setDriveSpeedMode(pressed, driverAltFunc);

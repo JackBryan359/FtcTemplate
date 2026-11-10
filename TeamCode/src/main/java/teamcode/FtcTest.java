@@ -182,7 +182,7 @@ public class FtcTest extends FtcTeleOp
         }   //toString
     }   //class TestChoices
 
-    private static final TestChoices testChoices = new TestChoices();
+    private static TestChoices testChoices;
     private static final TrcElapsedTimer loopPerfTimer =
         RobotParams.Preferences.useLoopPerformanceMonitor? new TrcElapsedTimer("loopPerfMonitor", 2.0): null;
     private TrcRobot.RobotCommand testCommand = null;
@@ -216,6 +216,7 @@ public class FtcTest extends FtcTeleOp
         // TeleOp initialization.
         //
         super.robotInit();
+        testChoices = new TestChoices();
         testChoices.fetchChoices(robot.dashboard);
     }   //robotInit
 
