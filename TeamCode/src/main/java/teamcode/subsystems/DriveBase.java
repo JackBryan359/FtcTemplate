@@ -170,11 +170,11 @@ public class DriveBase extends TrcSubsystem<DriveBase.Action>
                 .setDriveMotorInfo(
                     FtcMotorActuator.MotorType.DcMotor,
                     new String[] {"flDriveMotor", "frDriveMotor", "blDriveMotor", "brDriveMotor"},
-                    new boolean[] {false, true, true, false})
+                    new boolean[] {true, false, true, false})
                 .setIMUInfo(
                         "imu",
-                        RevHubOrientationOnRobot.LogoFacingDirection.BACKWARD,
-                        RevHubOrientationOnRobot.UsbFacingDirection.LEFT)
+                        RevHubOrientationOnRobot.LogoFacingDirection.RIGHT,
+                        RevHubOrientationOnRobot.UsbFacingDirection.UP)
                 .setPidStallDetectionEnabled(true)
                 .setPidDriveParams(false)
                 .setPurePursuitDriveParams(6.0, true, false)
