@@ -31,6 +31,7 @@ import ftclib.driverio.FtcGamepad;
 import ftclib.robotcore.FtcOpMode;
 import teamcode.indicators.RumbleIndicator;
 import teamcode.subsystems.DriveBase;
+import teamcode.subsystems.Indexer;
 import teamcode.subsystems.Intake;
 import teamcode.subsystems.Shooter;
 import teamcode.vision.Vision;
@@ -262,11 +263,11 @@ public class FtcTeleOp extends FtcOpMode
      */
     public void shoot(boolean pressed, boolean secondPressed) {
         if(pressed && robot.shooter.atShootingSpeed()) {
-            robot.intake.subsystemAction(Intake.Action.INTAKE, null);
+            robot.indexer.subsystemAction(Indexer.Action.INTAKE, null);
         } else if (secondPressed) {
-            robot.intake.subsystemAction(Intake.Action.INTAKE, null);
+            robot.indexer.subsystemAction(Indexer.Action.INTAKE, null);
         } else {
-            robot.intake.subsystemAction(Intake.Action.STOP, null);
+            robot.indexer.subsystemAction(Indexer.Action.STOP, null);
         }
     }
     public void driverButtonEvent(FtcGamepad.ButtonType button, boolean pressed)
@@ -281,8 +282,10 @@ public class FtcTeleOp extends FtcOpMode
             case A:
                 if(pressed) {
                     robot.intake.subsystemAction(Intake.Action.EJECT, null);
+                    robot.indexer.subsystemAction(Indexer.Action.EJECT, null);
                 } else {
                     robot.intake.subsystemAction(Intake.Action.STOP, null);
+                    robot.indexer.subsystemAction(Indexer.Action.STOP, null);
                 }
                 break;
 
@@ -299,7 +302,7 @@ public class FtcTeleOp extends FtcOpMode
                 if(pressed) {
                     shoot(pressed, true);
                 } else {
-                    robot.intake.subsystemAction(Intake.Action.STOP, null);
+                    robot.indexer.subsystemAction(Indexer.Action.STOP, null);
                 }
                 break;
 
@@ -307,7 +310,7 @@ public class FtcTeleOp extends FtcOpMode
                 if(pressed) {
                     shoot(pressed, false);
                 } else {
-                    robot.intake.subsystemAction(Intake.Action.STOP, null);
+                    robot.indexer.subsystemAction(Indexer.Action.STOP, null);
                 }
                 break;
 

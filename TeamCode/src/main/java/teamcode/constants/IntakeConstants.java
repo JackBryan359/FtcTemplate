@@ -20,8 +20,8 @@ public class IntakeConstants {
      * If on coast (brake mode = false), the motor will freely spin without resistance. */
     public static final boolean MOTOR_BRAKE = true;
     /** The speed of the motor while doing its action. 0.5 is 50% speed.*/
-    public static final double INTAKE_SPEED = 0.75;
-    public static final double EJECT_SPEED = -0.3;
+    public static final double INTAKE_SPEED = 1.0;
+    public static final double EJECT_SPEED = -0.5;
     /** The speed of the motor whilst not doing the other actions. Basically, the motor at rest.*/
     public static final double IDLE_SPEED = 0.0;
 }
