@@ -36,6 +36,7 @@ import ftclib.driverio.FtcValueMenu;
 import ftclib.robotcore.FtcOpMode;
 import teamcode.autocommands.BaseAuto;
 import teamcode.autocommands.CmdAuto;
+import teamcode.autocommands.DriveForwardAuto;
 import trclib.command.CmdPidDrive;
 import trclib.command.CmdPurePursuitDrive;
 import trclib.command.CmdTimedDrive;
@@ -69,10 +70,7 @@ public class FtcAuto extends FtcOpMode
     public enum AutoStrategy
     {
         BaseAuto,
-        StartPosLeftAuto,
-        PurePursuitDrive,
-        PidDrive,
-        TimedDrive,
+        DriveForwardAuto,
         DoNothing
     }   //enum AutoStrategy
 
@@ -150,14 +148,9 @@ public class FtcAuto extends FtcOpMode
             startPosMenu.addChoice("Start Position Left", AutoStartPos.Left, true, strategyMenu);
             startPosMenu.addChoice("Start Position Right", AutoStartPos.Right, false, strategyMenu);
 
-            /* Our Autos */
-            strategyMenu.addChoice("Base Auto", AutoStrategy.BaseAuto, true, useVisionMenu);
-
-            strategyMenu.addChoice("Left Auto", AutoStrategy.StartPosLeftAuto, false, useVisionMenu);
-            strategyMenu.addChoice("PurePursuit Drive", AutoStrategy.PurePursuitDrive, false, xTargetMenu);
-            strategyMenu.addChoice("PID Drive", AutoStrategy.PidDrive, false, xTargetMenu);
-            strategyMenu.addChoice("Timed Drive", AutoStrategy.TimedDrive, false, timedDrivePowerMenu);
             strategyMenu.addChoice("Do nothing", AutoStrategy.DoNothing, true);
+            strategyMenu.addChoice("Base Auto", AutoStrategy.BaseAuto, false);
+            strategyMenu.addChoice("Drive Forward Auto", AutoStrategy.DriveForwardAuto, false);
 
             ppDrivePathMenu.addChoice("Path 1", PurePursuitDrivePath.Path1, true);
             ppDrivePathMenu.addChoice("Path 2", PurePursuitDrivePath.Path2, false);
@@ -236,20 +229,20 @@ public class FtcAuto extends FtcOpMode
         public String toString()
         {
             return "alliance=\"" + alliance + "\" " +
-                   "startPos=\"" + startPos + "\" " +
-                   "strategy=\"" + strategy + "\" " +
-                   "startDelay=" + startDelay + " sec " +
-                   "xDistance=" + xDriveDistance + " ft " +
-                   "yDistance=" + yDriveDistance + " ft " +
-                   "turnDegrees=" + turnAngle + " deg " +
-                   "drivePower=" + drivePower + "\" " +
-                   "turnPower=" + turnPower + "\" " +
-                   "timedDrivePower=" + timedDrivePower + "\" " +
-                   "timedDriveTime=" + timedDriveTime + " sec " +
-                   "ppPathFile=\"" + purePursuitPathFile + "\" " +
-                   // Game specific choices.
-                   "useVision=" + useVision + " " +
-                   "scorePreload=" + scorePreload;
+                    "startPos=\"" + startPos + "\" " +
+                    "strategy=\"" + strategy + "\" " +
+                    "startDelay=" + startDelay + " sec " +
+                    "xDistance=" + xDriveDistance + " ft " +
+                    "yDistance=" + yDriveDistance + " ft " +
+                    "turnDegrees=" + turnAngle + " deg " +
+                    "drivePower=" + drivePower + "\" " +
+                    "turnPower=" + turnPower + "\" " +
+                    "timedDrivePower=" + timedDrivePower + "\" " +
+                    "timedDriveTime=" + timedDriveTime + " sec " +
+                    "ppPathFile=\"" + purePursuitPathFile + "\" " +
+                    // Game specific choices.
+                    "useVision=" + useVision + " " +
+                    "scorePreload=" + scorePreload;
         }   //toString
     }   //class AutoChoices
 
@@ -286,7 +279,7 @@ public class FtcAuto extends FtcOpMode
         {
             Robot.matchInfo = FtcMatchInfo.getMatchInfo();
             String filePrefix = String.format(
-                Locale.US, "%s%02d_Auto", Robot.matchInfo.matchType, Robot.matchInfo.matchNumber);
+                    Locale.US, "%s%02d_Auto", Robot.matchInfo.matchType, Robot.matchInfo.matchNumber);
             TrcDbgTrace.openTraceLog(RobotParams.Robot.logFolderPath, filePrefix);
         }
         autoChoices.fetchChoices(robot.dashboard);
@@ -295,47 +288,22 @@ public class FtcAuto extends FtcOpMode
         //
         switch (autoChoices.strategy)
         {
+            case DoNothing:
+                autoCommand = null;
+                break;
+
             case BaseAuto:
-                if(robot.robotBase != null) {
+                if (robot.robotBase != null) {
                     autoCommand = new BaseAuto(robot, autoChoices);
                 }
                 break;
 
-            case StartPosLeftAuto:
-                if (robot.robotBase != null)
-                {
-                    autoCommand = new CmdAuto(robot, autoChoices);
+            case DriveForwardAuto:
+                if (robot.robotBase != null) {
+                    autoCommand = new DriveForwardAuto(robot, autoChoices);
                 }
                 break;
 
-            case PurePursuitDrive:
-                if (robot.robotBase != null && robot.robotBase.purePursuitDrive != null)
-                {
-                    autoCommand = new CmdPurePursuitDrive(
-                        robot.robotBase.driveBase, robot.robotInfo.baseParams.xDrivePidCoeffs,
-                        robot.robotInfo.baseParams.yDrivePidCoeffs, robot.robotInfo.baseParams.turnPidCoeffs,
-                        robot.robotInfo.baseParams.velPidCoeffs);
-                }
-                break;
-
-            case PidDrive:
-                if (robot.robotBase != null && robot.robotBase.pidDrive != null)
-                {
-                    autoCommand = new CmdPidDrive(robot.robotBase.driveBase, robot.robotBase.pidDrive);
-                }
-                break;
-
-            case TimedDrive:
-                if (robot.robotBase != null)
-                {
-                    // TimedDrive only goes in the Y direction. Set up the robot to aim where you want to go.
-                    autoCommand = new CmdTimedDrive(
-                        robot.robotBase.driveBase, autoChoices.startDelay, autoChoices.timedDriveTime, 0.0,
-                        autoChoices.timedDrivePower, 0.0);
-                }
-                break;
-
-            case DoNothing:
             default:
                 autoCommand = null;
                 break;
@@ -397,7 +365,7 @@ public class FtcAuto extends FtcOpMode
             TrcDbgTrace.setTraceLogEnabled(true);
         }
         robot.globalTracer.traceInfo(
-            moduleName, "***** Starting autonomous: " + TrcTimer.getCurrentTimeString() + " *****");
+                moduleName, "***** Starting autonomous: " + TrcTimer.getCurrentTimeString() + " *****");
         if (Robot.matchInfo != null)
         {
             robot.globalTracer.logInfo(moduleName, "MatchInfo", Robot.matchInfo.toString());
@@ -412,31 +380,6 @@ public class FtcAuto extends FtcOpMode
         if (robot.battery != null)
         {
             robot.battery.setEnabled(true);
-        }
-
-        if (autoCommand != null)
-        {
-            if (autoChoices.strategy == AutoStrategy.PurePursuitDrive)
-            {
-                ((CmdPurePursuitDrive) autoCommand).startPath(
-                    0.0, false,
-                    robot.robotInfo.baseParams.profiledMaxDriveVelocity,
-                    robot.robotInfo.baseParams.profiledMaxDriveAcceleration,
-                    robot.robotInfo.baseParams.profiledMaxDriveDeceleration,
-                    autoChoices.drivePower, autoChoices.turnPower,
-                    autoChoices.purePursuitPathFile, false);
-            }
-            else if (autoChoices.strategy == AutoStrategy.PidDrive)
-            {
-                ((CmdPidDrive) autoCommand).startPath(
-                    autoChoices.startDelay, autoChoices.drivePower, autoChoices.turnPower, null,
-                    new TrcPose2D(
-                        autoChoices.xDriveDistance*12.0,
-                        autoChoices.yDriveDistance*12.0,
-                        autoChoices.turnAngle));
-            }
-
-            autoCommand.start();
         }
     }   //startMode
 
@@ -468,7 +411,7 @@ public class FtcAuto extends FtcOpMode
         }
 
         robot.globalTracer.traceInfo(
-            moduleName, "***** Stopping autonomous: " + TrcTimer.getCurrentTimeString() + " *****");
+                moduleName, "***** Stopping autonomous: " + TrcTimer.getCurrentTimeString() + " *****");
         printPerformanceMetrics();
 
         if (TrcDbgTrace.isTraceLogOpened())

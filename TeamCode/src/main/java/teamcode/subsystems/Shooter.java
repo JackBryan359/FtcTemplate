@@ -68,13 +68,13 @@ public class Shooter extends TrcSubsystem<Shooter.Action> {
         spinShooter(ShooterConstants.IDLE_SPEED);
     }
 
-    private boolean atSpeed(double speed) {
-        return shooter.getShooter().getShooterMotor1Velocity() ==
-                speed;
+    private boolean atSpeed(double speed, double range) {
+        return (shooter.getShooter().getShooterMotor1Velocity() > (speed-range))
+                && (shooter.getShooter().getShooterMotor1Velocity() < (speed+range));
     }
 
     public boolean atShootingSpeed() {
-        return atSpeed(ShooterConstants.SHOOTING_SPEED);
+        return atSpeed(ShooterConstants.SHOOTING_SPEED, 0.05);
     }
 
     /** Rev/Sec */
