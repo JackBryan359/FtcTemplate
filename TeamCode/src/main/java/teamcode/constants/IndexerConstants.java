@@ -5,9 +5,9 @@ import ftclib.motor.FtcMotorActuator;
 
 public class IndexerConstants {
     /** The name your motor is given. */
-    public static final String MOTOR_NAME = "Indexer";
+    public static final String MOTOR_NAME = "IndexMotor";
     /** The kind of motor your motor is. The BILDA 5203 Series Yellow Jacket is a DcMotor. */
-    public static final FtcMotorActuator.MotorType MOTOR_TYPE = FtcMotorActuator.MotorType.CRServo;
+    public static final FtcMotorActuator.MotorType MOTOR_TYPE = FtcMotorActuator.MotorType.DcMotor;
     /** The inverted value of your motor (clockwise/counter-clockwise) */
     public static final boolean MOTOR_INVERTED = false;
     /** The voltage compensation of the motor. If enabled, it attempts to combat voltage drop in the battery.
@@ -18,8 +18,8 @@ public class IndexerConstants {
      * If on coast (brake mode = false), the motor will freely spin without resistance. */
     public static final boolean MOTOR_BRAKE = true;
     /** The speed of the motor while doing its action. 0.5 is 50% speed.*/
-    public static final double INTAKE_SPEED = 0.5;
-    public static final double EJECT_SPEED = -0.5;
+    public static final double INTAKE_SPEED = 1.0;
+    public static final double EJECT_SPEED = -1.0;
     /** The speed of the motor whilst not doing the other actions. Basically, the motor at rest.*/
     public static final double IDLE_SPEED = 0.0;
 }
