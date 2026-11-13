@@ -17,7 +17,8 @@ public class BaseAuto implements TrcRobot.RobotCommand {
         SPIN_UP,
         SHOOT,
         DRIVE_FORWARD,
-        DRIVE_RIGHT_TO_PARK,
+        TURN_LEFT,
+        DRIVE_TO_PARK,
         DONE
     }
 
@@ -165,12 +166,18 @@ public class BaseAuto implements TrcRobot.RobotCommand {
             case DRIVE_FORWARD:
                 robot.robotBase.driveBase.holonomicDrive(
                         0.0, 0.4, 0.0, 1.0, driveEvent);
-                sm.waitForEvents(State.DRIVE_RIGHT_TO_PARK, driveEvent);
+                sm.waitForEvents(State.TURN_LEFT, driveEvent);
                 break;
 
-            case DRIVE_RIGHT_TO_PARK:
+            case TURN_LEFT:
                 robot.robotBase.driveBase.holonomicDrive(
-                    0.4, 0.0, 0.0, 2.0, driveEvent);
+                        0.0,0.0,0.3, 0.8, driveEvent);
+                sm.waitForEvents(State.DRIVE_TO_PARK, driveEvent);
+                break;
+
+            case DRIVE_TO_PARK:
+                robot.robotBase.driveBase.holonomicDrive(
+                    0.0, 0.6, 0.0, 2.5, driveEvent);
                 sm.waitForEvents(State.DONE, driveEvent);
                 break;
 
