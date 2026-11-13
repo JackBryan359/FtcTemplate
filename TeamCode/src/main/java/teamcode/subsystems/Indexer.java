@@ -22,7 +22,7 @@ public class Indexer extends TrcSubsystem<Indexer.Action> {
     public Indexer() {
         super(SUBSYSTEM_NAME, false);
 
-        FtcRollerIntake.Params indexParams =
+        FtcRollerIntake.Params indexerParams =
                 new FtcRollerIntake.Params()
                         .setPrimaryMotor(
                                 IndexerConstants.MOTOR_NAME,
@@ -30,22 +30,17 @@ public class Indexer extends TrcSubsystem<Indexer.Action> {
                                 IndexerConstants.MOTOR_INVERTED,
                                 IndexerConstants.MOTOR_VOLTAGE_COMP,
                                 IndexerConstants.MOTOR_BRAKE
-                        )
-                        .setPowerLevels(
-                                IndexerConstants.INTAKE_SPEED,
-                                IndexerConstants.EJECT_SPEED,
-                                IndexerConstants.IDLE_SPEED
                         );
 
         indexer = new FtcRollerIntake(
                 SUBSYSTEM_NAME,
-                indexParams
+                indexerParams
         );
     }
 
     /* Motor Methods */
     public void intake() {
-        indexer.getIntake().intake();
+        intake(IntakeConstants.INTAKE_SPEED);
     }
 
     public void intake(double percentOutput) {
@@ -53,7 +48,7 @@ public class Indexer extends TrcSubsystem<Indexer.Action> {
     }
 
     public void eject() {
-        indexer.getIntake().eject();
+        eject(IntakeConstants.EJECT_SPEED);
     }
 
     public void eject(double percentOutput) {

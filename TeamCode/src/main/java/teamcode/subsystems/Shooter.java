@@ -2,6 +2,7 @@ package teamcode.subsystems;
 
 import ftclib.subsystem.FtcShooter;
 import teamcode.constants.ShooterConstants;
+import trclib.motor.TrcMotor;
 import trclib.robotcore.TrcEvent;
 import trclib.subsystem.TrcSubsystem;
 
@@ -24,26 +25,34 @@ public class Shooter extends TrcSubsystem<Shooter.Action> {
         FtcShooter.Params shooterParams =
                 new FtcShooter.Params()
                         .setShooterMotor1(
-                                ShooterConstants.LEFT_MOTOR_NAME,
+                                ShooterConstants.MOTOR_NAME,
                                 ShooterConstants.MOTOR_TYPE,
-                                ShooterConstants.LEFT_MOTOR_INVERTED,
+                                ShooterConstants.MOTOR_INVERTED,
                                 ShooterConstants.MOTOR_VOLTAGE_COMP,
                                 ShooterConstants.MOTOR_BRAKE,
                                 ShooterConstants.MOTOR_VELOCITY_TRIGGER
-                        )
-                        .setShooterMotor2(
-                                ShooterConstants.RIGHT_MOTOR_NAME,
-                                ShooterConstants.MOTOR_TYPE,
-                                ShooterConstants.RIGHT_MOTOR_INVERTED,
-                                ShooterConstants.MOTOR_VOLTAGE_COMP,
-                                ShooterConstants.MOTOR_BRAKE,
-                                ShooterConstants.MOTOR_VELOCITY_TRIGGER,
-                                ShooterConstants.MOTOR_FOLLOWER
                         );
         shooter = new FtcShooter(
                 SUBSYSTEM_NAME,
                 shooterParams
         );
+
+        shooter.getShooter().getShooterMotor1().setVelocityPidParameters(
+                new TrcMotor.PidParams()
+                        .setPidCoefficients(
+                                ShooterConstants.kP,
+                                ShooterConstants.kI,
+                                ShooterConstants.kD,
+                                ShooterConstants.kF
+                        )
+                        .setPidControlParams(
+                                ShooterConstants.VELOCITY_TOLERANCE,
+                                0.0,
+                                false
+                        ),
+                null
+        );
+
     }
 
     /* Motor Methods */
@@ -59,18 +68,18 @@ public class Shooter extends TrcSubsystem<Shooter.Action> {
         spinShooter(ShooterConstants.IDLE_SPEED);
     }
 
-    private boolean atSpeed(double speed) {
-        return shooter.getShooter().getShooterMotor1Velocity() ==
-                speed;
+    private boolean atSpeed(double speed, double range) {
+        return (shooter.getShooter().getShooterMotor1Power() > (speed-range))
+                && (shooter.getShooter().getShooterMotor1Power() < (speed+range));
     }
 
     public boolean atShootingSpeed() {
-        return atSpeed(ShooterConstants.SHOOTING_SPEED);
+        return atSpeed(ShooterConstants.SHOOTING_SPEED, 0.05);
     }
 
     /** Rev/Sec */
     private void spinShooter(double speed) {
-        shooter.getShooter().setShooterMotorVelocity(speed, speed);
+        shooter.getShooter().getShooterMotor1().setPower(speed);
     }
 
     /* TrcSubsystem Methods */

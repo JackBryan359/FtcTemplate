@@ -261,13 +261,13 @@ public class FtcTeleOp extends FtcOpMode
      * @param pressed specifies true if the shoot button is pressed, false otherwise.
 //     * @param secondPressed specifies true if the secondary button is pressed.
      */
-//    public void shoot(boolean pressed, boolean secondPressed) {
-//        if(pressed && robot.shooter.atShootingSpeed()) {
-//            robot.indexer.subsystemAction(Indexer.Action.INTAKE, null);
-//        } else if (secondPressed) {
-//            robot.indexer.subsystemAction(Indexer.Action.INTAKE, null);
-//        }
-//    }
+    public void shoot(boolean pressed, boolean secondPressed) {
+        if(pressed && robot.shooter.atShootingSpeed()) {
+            robot.indexer.subsystemAction(Indexer.Action.INTAKE, null);
+        } else if (secondPressed) {
+            robot.indexer.subsystemAction(Indexer.Action.INTAKE, null);
+        }
+    }
     public void driverButtonEvent(FtcGamepad.ButtonType button, boolean pressed)
     {
         if (traceButtonEvents)
@@ -278,11 +278,11 @@ public class FtcTeleOp extends FtcOpMode
         switch (button)
         {
             case A:
-//                if(pressed) {
-//                    robot.intake.subsystemAction(Intake.Action.EJECT, null);
-//                } else {
-//                    robot.intake.subsystemAction(Intake.Action.STOP, null);
-//                }
+                if(pressed) {
+                    robot.intake.subsystemAction(Intake.Action.EJECT, null);
+                } else {
+                    robot.intake.subsystemAction(Intake.Action.STOP, null);
+                }
                 break;
 
             case B:
@@ -291,39 +291,39 @@ public class FtcTeleOp extends FtcOpMode
             case X:
                 break;
             case Y:
-//                robot.shooter.subsystemAction(Shooter.Action.STOP, null);
+                robot.shooter.subsystemAction(Shooter.Action.STOP, null);
                 break;
 
             case LeftBumper:
-//                if(pressed) {
-//                    shoot(pressed, true);
-//                } else {
-//                    robot.indexer.subsystemAction(Indexer.Action.STOP, null);
-//                }
+                if(pressed) {
+                    shoot(pressed, true);
+                } else {
+                    robot.indexer.subsystemAction(Indexer.Action.STOP, null);
+                }
                 break;
 
             case RightBumper:
-//                if(pressed) {
-//                    shoot(pressed, false);
-//                } else {
-//                    robot.indexer.subsystemAction(Indexer.Action.STOP, null);
-//                }
+                if(pressed) {
+                    shoot(pressed, false);
+                } else {
+                    robot.indexer.subsystemAction(Indexer.Action.STOP, null);
+                }
                 break;
 
             case LeftTrigger:
-//                if(pressed) {
-//                    robot.intake.subsystemAction(Intake.Action.INTAKE, null);
-//                } else {
-//                    robot.intake.subsystemAction(Intake.Action.STOP, null);
-//                }
+                if(pressed) {
+                    robot.intake.subsystemAction(Intake.Action.INTAKE, null);
+                } else {
+                    robot.intake.subsystemAction(Intake.Action.STOP, null);
+                }
                 break;
 
             case RightTrigger:
-//                if(pressed) {
-//                    robot.shooter.subsystemAction(Shooter.Action.SHOOT, null);
-//                } else {
-//                    robot.shooter.subsystemAction(Shooter.Action.IDLE, null);
-//                }
+                if(pressed) {
+                    robot.shooter.subsystemAction(Shooter.Action.SHOOT, null);
+                } else {
+                    robot.shooter.subsystemAction(Shooter.Action.STOP, null);
+                }
                 break;
 
             case DpadUp:
