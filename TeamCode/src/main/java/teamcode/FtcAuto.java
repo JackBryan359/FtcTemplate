@@ -36,6 +36,7 @@ import ftclib.driverio.FtcValueMenu;
 import ftclib.robotcore.FtcOpMode;
 import teamcode.autocommands.BaseAuto;
 import teamcode.autocommands.CmdAuto;
+import teamcode.autocommands.DriveBackAuto;
 import trclib.command.CmdPidDrive;
 import trclib.command.CmdPurePursuitDrive;
 import trclib.command.CmdTimedDrive;
@@ -69,6 +70,7 @@ public class FtcAuto extends FtcOpMode
     public enum AutoStrategy
     {
         BaseAuto,
+        DriveBackAuto,
         DoNothing
     }   //enum AutoStrategy
 
@@ -148,6 +150,7 @@ public class FtcAuto extends FtcOpMode
 
             strategyMenu.addChoice("Do nothing", AutoStrategy.DoNothing, true);
             strategyMenu.addChoice("Base Auto", AutoStrategy.BaseAuto, false);
+            strategyMenu.addChoice("Drive Back Auto", AutoStrategy.DriveBackAuto, false);
 
             ppDrivePathMenu.addChoice("Path 1", PurePursuitDrivePath.Path1, true);
             ppDrivePathMenu.addChoice("Path 2", PurePursuitDrivePath.Path2, false);
@@ -292,6 +295,12 @@ public class FtcAuto extends FtcOpMode
             case BaseAuto:
                 if (robot.robotBase != null) {
                     autoCommand = new BaseAuto(robot, autoChoices);
+                }
+                break;
+
+            case DriveBackAuto:
+                if (robot.robotBase != null) {
+                    autoCommand = new DriveBackAuto(robot, autoChoices);
                 }
                 break;
 
