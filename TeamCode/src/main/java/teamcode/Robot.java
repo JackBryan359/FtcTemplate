@@ -134,9 +134,9 @@ public class Robot
         {
             if (RobotParams.Preferences.useSubsystems)
             {
-//                intake = new Intake();
-//                shooter = new Shooter();
-//                indexer = new Indexer();
+                intake = new Intake();
+                shooter = new Shooter();
+                indexer = new Indexer();
 
                 // Zero calibrate all subsystems only in Auto or if TeleOp is run standalone without prior Auto.
                 // There is no reason to zero calibrate again if Auto was run right before TeleOp.

@@ -29,6 +29,7 @@ import java.util.Locale;
 import ftclib.drivebase.FtcSwerveBase;
 import ftclib.driverio.FtcGamepad;
 import ftclib.robotcore.FtcOpMode;
+import teamcode.constants.IndexerConstants;
 import teamcode.indicators.RumbleIndicator;
 import teamcode.subsystems.DriveBase;
 import teamcode.subsystems.Indexer;
@@ -76,8 +77,8 @@ public class FtcTeleOp extends FtcOpMode
         if (RobotParams.Preferences.useTraceLog)
         {
             String filePrefix = Robot.matchInfo != null?
-                String.format(Locale.US, "%s%02d_TeleOp", Robot.matchInfo.matchType, Robot.matchInfo.matchNumber):
-                "Standalone_TeleOp";
+                    String.format(Locale.US, "%s%02d_TeleOp", Robot.matchInfo.matchType, Robot.matchInfo.matchNumber):
+                    "Standalone_TeleOp";
             TrcDbgTrace.openTraceLog(RobotParams.Robot.logFolderPath, filePrefix);
         }
         // Create and initialize Gamepads.
@@ -123,7 +124,7 @@ public class FtcTeleOp extends FtcOpMode
             TrcDbgTrace.setTraceLogEnabled(true);
         }
         robot.globalTracer.traceInfo(
-            moduleName, "***** Starting TeleOp: " + TrcTimer.getCurrentTimeString() + " *****");
+                moduleName, "***** Starting TeleOp: " + TrcTimer.getCurrentTimeString() + " *****");
 //        robot.dashboard.clearDisplay();
         //
         // Tell robot object opmode is about to start so it can do the necessary start initialization for the mode.
@@ -170,7 +171,7 @@ public class FtcTeleOp extends FtcOpMode
         //
         robot.stopMode(prevMode);
         robot.globalTracer.traceInfo(
-            moduleName, "***** Stopping TeleOp: " + TrcTimer.getCurrentTimeString() + " *****");
+                moduleName, "***** Stopping TeleOp: " + TrcTimer.getCurrentTimeString() + " *****");
         printPerformanceMetrics();
 
         if (TrcDbgTrace.isTraceLogOpened())
@@ -203,7 +204,7 @@ public class FtcTeleOp extends FtcOpMode
                 if (robot.robotBase != null)
                 {
                     double[] inputs = driverGamepad.getDriveInputs(
-                        Dashboard.SubsystemDrivebase.driveMode, true, drivePowerScale, turnPowerScale);
+                            Dashboard.SubsystemDrivebase.driveMode, true, drivePowerScale, turnPowerScale);
 
                     robot.robotDriveBase.subsystemControl(driverAltFunc, inputs);
                     // Check for EndGame warning.
@@ -259,15 +260,17 @@ public class FtcTeleOp extends FtcOpMode
      * This method shoots when pressed.
      *
      * @param pressed specifies true if the shoot button is pressed, false otherwise.
-//     * @param secondPressed specifies true if the secondary button is pressed.
+    //     * @param secondPressed specifies true if the secondary button is pressed.
      */
-//    public void shoot(boolean pressed, boolean secondPressed) {
-//        if(pressed && robot.shooter.atShootingSpeed()) {
-//            robot.indexer.subsystemAction(Indexer.Action.INTAKE, null);
-//        } else if (secondPressed) {
-//            robot.indexer.subsystemAction(Indexer.Action.INTAKE, null);
-//        }
-//    }
+    public void shoot(boolean pressed, boolean secondPressed) {
+        if(pressed && robot.shooter.atShootingSpeed()) {
+            robot.indexer.subsystemAction(Indexer.Action.INTAKE, null);
+        } else if (secondPressed) {
+            robot.indexer.subsystemAction(Indexer.Action.INTAKE, null);
+        } else {
+            robot.indexer.subsystemAction(Indexer.Action.STOP, null);
+        }
+    }
     public void driverButtonEvent(FtcGamepad.ButtonType button, boolean pressed)
     {
         if (traceButtonEvents)
@@ -278,11 +281,13 @@ public class FtcTeleOp extends FtcOpMode
         switch (button)
         {
             case A:
-//                if(pressed) {
-//                    robot.intake.subsystemAction(Intake.Action.EJECT, null);
-//                } else {
-//                    robot.intake.subsystemAction(Intake.Action.STOP, null);
-//                }
+                if(pressed) {
+                    robot.intake.subsystemAction(Intake.Action.EJECT, null);
+                    robot.indexer.subsystemAction(Indexer.Action.EJECT, null);
+                } else {
+                    robot.intake.subsystemAction(Intake.Action.STOP, null);
+                    robot.indexer.subsystemAction(Indexer.Action.STOP, null);
+                }
                 break;
 
             case B:
@@ -291,39 +296,39 @@ public class FtcTeleOp extends FtcOpMode
             case X:
                 break;
             case Y:
-//                robot.shooter.subsystemAction(Shooter.Action.STOP, null);
+                robot.shooter.subsystemAction(Shooter.Action.STOP, null);
                 break;
 
             case LeftBumper:
-//                if(pressed) {
-//                    shoot(pressed, true);
-//                } else {
-//                    robot.indexer.subsystemAction(Indexer.Action.STOP, null);
-//                }
+                if(pressed) {
+                    shoot(pressed, true);
+                } else {
+                    robot.indexer.subsystemAction(Indexer.Action.STOP, null);
+                }
                 break;
 
             case RightBumper:
-//                if(pressed) {
-//                    shoot(pressed, false);
-//                } else {
-//                    robot.indexer.subsystemAction(Indexer.Action.STOP, null);
-//                }
+                if(pressed) {
+                    shoot(pressed, false);
+                } else {
+                    robot.indexer.subsystemAction(Indexer.Action.STOP, null);
+                }
                 break;
 
             case LeftTrigger:
-//                if(pressed) {
-//                    robot.intake.subsystemAction(Intake.Action.INTAKE, null);
-//                } else {
-//                    robot.intake.subsystemAction(Intake.Action.STOP, null);
-//                }
+                if(pressed) {
+                    robot.intake.subsystemAction(Intake.Action.INTAKE, null);
+                } else {
+                    robot.intake.subsystemAction(Intake.Action.STOP, null);
+                }
                 break;
 
             case RightTrigger:
-//                if(pressed) {
-//                    robot.shooter.subsystemAction(Shooter.Action.SHOOT, null);
-//                } else {
-//                    robot.shooter.subsystemAction(Shooter.Action.IDLE, null);
-//                }
+                if(pressed) {
+                    robot.shooter.subsystemAction(Shooter.Action.SHOOT, null);
+                } else {
+                    robot.shooter.subsystemAction(Shooter.Action.STOP, null);
+                }
                 break;
 
             case DpadUp:
@@ -371,7 +376,7 @@ public class FtcTeleOp extends FtcOpMode
                 if (pressed)
                 {
                     robot.setRelocalizationMode(
-                        driverAltFunc? Robot.RelocalizationMode.Continuous: Robot.RelocalizationMode.OneShot);
+                            driverAltFunc? Robot.RelocalizationMode.Continuous: Robot.RelocalizationMode.OneShot);
                 }
                 break;
 
@@ -435,10 +440,10 @@ public class FtcTeleOp extends FtcOpMode
                     if (operatorAltFunc)
                     {
                         Dashboard.DashboardParams.alliance =
-                            Dashboard.DashboardParams.alliance == FtcAuto.Alliance.Blue?
-                                FtcAuto.Alliance.Red: FtcAuto.Alliance.Blue;
+                                Dashboard.DashboardParams.alliance == FtcAuto.Alliance.Blue?
+                                        FtcAuto.Alliance.Red: FtcAuto.Alliance.Blue;
                         robot.globalTracer.traceInfo(
-                            moduleName, ">>>>> Toggle alliance: alliance=" + Dashboard.DashboardParams.alliance);
+                                moduleName, ">>>>> Toggle alliance: alliance=" + Dashboard.DashboardParams.alliance);
                     }
                     else
                     {

@@ -52,7 +52,7 @@ public class Dashboard
         public static double driveSlowScale = 0.3;
         public static double driveNormalScale = 1.0;
         public static double turnSlowScale = 0.3;
-        public static double turnNormalScale = 1.0;
+        public static double turnNormalScale = 0.5;
     }   //class SubsystemDrivebase
 
     @Config

@@ -34,6 +34,7 @@ import ftclib.driverio.FtcMatchInfo;
 import ftclib.driverio.FtcMenu;
 import ftclib.driverio.FtcValueMenu;
 import ftclib.robotcore.FtcOpMode;
+import teamcode.autocommands.BaseAuto;
 import teamcode.autocommands.CmdAuto;
 import trclib.command.CmdPidDrive;
 import trclib.command.CmdPurePursuitDrive;
@@ -67,6 +68,7 @@ public class FtcAuto extends FtcOpMode
 
     public enum AutoStrategy
     {
+        BaseAuto,
         StartPosLeftAuto,
         PurePursuitDrive,
         PidDrive,
@@ -147,6 +149,9 @@ public class FtcAuto extends FtcOpMode
 
             startPosMenu.addChoice("Start Position Left", AutoStartPos.Left, true, strategyMenu);
             startPosMenu.addChoice("Start Position Right", AutoStartPos.Right, false, strategyMenu);
+
+            /* Our Autos */
+            strategyMenu.addChoice("Base Auto", AutoStrategy.BaseAuto, true, useVisionMenu);
 
             strategyMenu.addChoice("Left Auto", AutoStrategy.StartPosLeftAuto, false, useVisionMenu);
             strategyMenu.addChoice("PurePursuit Drive", AutoStrategy.PurePursuitDrive, false, xTargetMenu);
@@ -290,6 +295,12 @@ public class FtcAuto extends FtcOpMode
         //
         switch (autoChoices.strategy)
         {
+            case BaseAuto:
+                if(robot.robotBase != null) {
+                    autoCommand = new BaseAuto(robot, autoChoices);
+                }
+                break;
+
             case StartPosLeftAuto:
                 if (robot.robotBase != null)
                 {

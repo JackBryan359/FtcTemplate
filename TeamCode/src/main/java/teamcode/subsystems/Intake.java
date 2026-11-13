@@ -29,11 +29,6 @@ public class Intake extends TrcSubsystem<Intake.Action> {
                                 IntakeConstants.MOTOR_INVERTED,
                                 IntakeConstants.MOTOR_VOLTAGE_COMP,
                                 IntakeConstants.MOTOR_BRAKE
-                        )
-                        .setPowerLevels(
-                                IntakeConstants.INTAKE_SPEED,
-                                IntakeConstants.EJECT_SPEED,
-                                IntakeConstants.IDLE_SPEED
                         );
 
         intake = new FtcRollerIntake(
@@ -44,7 +39,7 @@ public class Intake extends TrcSubsystem<Intake.Action> {
 
     /* Motor Methods */
     public void intake() {
-        intake.getIntake().intake();
+        intake(IntakeConstants.INTAKE_SPEED);
     }
 
     public void intake(double percentOutput) {
@@ -52,7 +47,7 @@ public class Intake extends TrcSubsystem<Intake.Action> {
     }
 
     public void eject() {
-        intake.getIntake().eject();
+        eject(IntakeConstants.EJECT_SPEED);
     }
 
     public void eject(double percentOutput) {
