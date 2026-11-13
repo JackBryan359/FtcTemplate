@@ -401,6 +401,10 @@ public class FtcAuto extends FtcOpMode
             robot.battery.setEnabled(false);
         }
 
+        if (autoCommand != null) {
+            autoCommand.start();
+        }
+
         robot.globalTracer.traceInfo(
             moduleName, "***** Stopping autonomous: " + TrcTimer.getCurrentTimeString() + " *****");
         printPerformanceMetrics();

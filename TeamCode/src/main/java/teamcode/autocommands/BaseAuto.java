@@ -4,6 +4,7 @@ package teamcode.autocommands;
 import teamcode.Robot;
 import teamcode.FtcAuto.AutoChoices;
 import teamcode.subsystems.Indexer;
+import teamcode.subsystems.Intake;
 import teamcode.subsystems.Shooter;
 import trclib.robotcore.TrcEvent;
 import trclib.robotcore.TrcRobot;
@@ -49,10 +50,9 @@ public class BaseAuto implements TrcRobot.RobotCommand {
     public void cancel() {
         timer.cancel();
         robot.robotBase.driveBase.stop();
-        robot.shooter.stop();
-        robot.indexer.stop();
-        robot.intake.stop();
-        robot.shooter.stop();
+//        robot.indexer.subsystemAction(Indexer.Action.STOP, null);
+//        robot.intake.subsystemAction(Intake.Action.STOP, null);
+//        robot.shooter.subsystemAction(Shooter.Action.STOP, null);
         sm.stop();
     }
 
