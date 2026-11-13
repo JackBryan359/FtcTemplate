@@ -381,6 +381,10 @@ public class FtcAuto extends FtcOpMode
         {
             robot.battery.setEnabled(true);
         }
+
+        if (autoCommand != null) {
+            autoCommand.start();
+        }
     }   //startMode
 
     /**
