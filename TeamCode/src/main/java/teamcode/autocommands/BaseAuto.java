@@ -169,7 +169,7 @@ import trclib.timer.TrcTimer;
 
                 case DRIVE_RIGHT_TO_PARK:
                     robot.robotBase.driveBase.holonomicDrive(
-                            0.4, 0.0, 0.0, 2.5, driveEvent);
+                            0.4, 0.0, 0.0, 2.0, driveEvent);
                     sm.waitForEvents(State.DONE, driveEvent);
                     break;
 
