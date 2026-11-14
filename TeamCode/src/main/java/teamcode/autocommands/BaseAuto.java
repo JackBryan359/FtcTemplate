@@ -85,7 +85,7 @@ public class BaseAuto implements TrcRobot.RobotCommand {
 
             case DRIVE_LEFT_TO_PARK:
                 robot.robotBase.driveBase.holonomicDrive(
-                        -0.8, 0.0, 0.0, 6.0, driveEvent);
+                        -0.8, 0.0, 0.0, 3.0, driveEvent);
                 sm.waitForEvents(State.DONE, driveEvent);
                 break;
 
