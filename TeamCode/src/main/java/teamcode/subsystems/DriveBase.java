@@ -55,7 +55,7 @@ public class DriveBase extends TrcSubsystem<DriveBase.Action>
     {
         ToggleDriveMode,
         ToggleGyroAssist,
-        ZeroDriveFieldCentric
+        ZeroDriveFieldCentric 
     }   //enum Action
 
     public static final String SUBSYSTEM_NAME = "DriveBase";
