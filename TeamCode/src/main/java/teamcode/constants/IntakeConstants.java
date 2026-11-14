@@ -11,11 +11,12 @@ public class IntakeConstants {
     /** The kind of motor your motor is. The BILDA 5203 Series Yellow Jacket is a DcMotor. */
     public static final FtcMotorActuator.MotorType MOTOR_TYPE = FtcMotorActuator.MotorType.DcMotor;
     /** The inverted value of your motor (clockwise/counter-clockwise) */
-    public static final boolean MOTOR_INVERTED = true;
+    public static final boolean MOTOR_INVERTED = false;
     /** The voltage compensation of the motor. If enabled, it attempts to combat voltage drop in the battery.
      * Ex: If the motor runs at 50% while the battery is at 12v, it runs at 6v. However, when battery is at 10v,
      * the motor will run at 5v. This voltage compensation attempts to combat that and keep a consistent speed.*/
-    public static final boolean MOTOR_VOLTAGE_COMP = false;
+   public static final boolean MOTOR_VOLTAGE_COMP = false;
+
     /** The brake mode of the motor. If enabled, the motor is on brake, and attempts to stay in place.
      * If on coast (brake mode = false), the motor will freely spin without resistance. */
     public static final boolean MOTOR_BRAKE = true;

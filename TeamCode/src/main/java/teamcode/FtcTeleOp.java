@@ -296,7 +296,11 @@ public class FtcTeleOp extends FtcOpMode
             case X:
                 break;
             case Y:
-                robot.shooter.subsystemAction(Shooter.Action.STOP, null);
+                if(pressed) {
+                    robot.shooter.subsystemAction(Shooter.Action.STOP, null);
+
+                }
+
                 break;
 
             case LeftBumper:
