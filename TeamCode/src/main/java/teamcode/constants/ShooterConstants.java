@@ -22,8 +22,8 @@ public class ShooterConstants {
     public static final boolean MOTOR_VELOCITY_TRIGGER = false;
     public static final boolean MOTOR_FOLLOWER = true;
     /** The speed of the motor in Rev/Sec. */
-    public static final double SHOOTING_SPEED = 0.95;
-    public static final double IDLE_SPEED = 0.0;
+    public static final double SHOOTING_SPEED = 0.90;
+    public static final double IDLE_SPEED = 0.4;
     /** The speed of the motor whilst not doing the other actions. Basically, the motor at rest.*/
     public static final double STOP_SPEED = 0.0;
 

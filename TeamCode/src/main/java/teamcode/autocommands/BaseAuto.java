@@ -4,6 +4,7 @@ package teamcode.autocommands;
 import teamcode.Robot;
 import teamcode.FtcAuto.AutoChoices;
 import teamcode.subsystems.Indexer;
+import teamcode.subsystems.Intake;
 import teamcode.subsystems.Shooter;
 import trclib.robotcore.TrcEvent;
 import trclib.robotcore.TrcRobot;
@@ -14,10 +15,12 @@ public class BaseAuto implements TrcRobot.RobotCommand {
 
     private enum State {
         START,
+        DRIVE_TO_SHOOT,
+        INTAKE ,
         SPIN_UP,
         SHOOT,
         DRIVE_FORWARD,
-        TURN_LEFT,
+        TURN_RIGHT,
         DRIVE_TO_PARK,
         DONE
     }
@@ -77,12 +80,19 @@ public class BaseAuto implements TrcRobot.RobotCommand {
 
             case START:
                 robot.setRobotStartPosition(autoChoices);
-                sm.setState(State.SPIN_UP);
+            sm.setState(State.DRIVE_TO_SHOOT);
                 break;
+
+            case DRIVE_TO_SHOOT:
+                robot.robotBase.driveBase.holonomicDrive(
+                        0.0, 0.3, 0.0, .7, driveEvent);
+                sm.waitForEvents(State.SPIN_UP, driveEvent);
+                break;
+
 
             case SPIN_UP:
                 robot.shooter.subsystemAction(Shooter.Action.SHOOT, null);
-                timer.set(3.0, timerEvent);
+                timer.set(7.0, timerEvent);
                 sm.waitForEvents(State.SHOOT, timerEvent);
                 break;
 
@@ -92,6 +102,7 @@ public class BaseAuto implements TrcRobot.RobotCommand {
                     case 0:
                         // Start shooter and indexer
                         robot.indexer.subsystemAction(Indexer.Action.INTAKE, null);
+                        robot.intake.subsystemAction(Intake.Action.INTAKE, null);
 
                         shootStep = 1;
                         timer.set(0.5, timerEvent);
@@ -101,54 +112,60 @@ public class BaseAuto implements TrcRobot.RobotCommand {
                     case 1:
                         // Stop indexer, keep shooter running
                         robot.indexer.subsystemAction(Indexer.Action.STOP, null);
+                        robot.intake.subsystemAction(Intake.Action.STOP, null);
 
                         shootStep = 2;
-                        timer.set(0.5, timerEvent);
+                        timer.set(0.6, timerEvent);
                         sm.waitForEvents(State.SHOOT, timerEvent);
                         break;
 
                     case 2:
                         // Index again
                         robot.indexer.subsystemAction(Indexer.Action.INTAKE, null);
+                        robot.intake.subsystemAction(Intake.Action.INTAKE, null);
 
                         shootStep = 3;
-                        timer.set(0.5, timerEvent);
+                        timer.set(0.6, timerEvent);
                         sm.waitForEvents(State.SHOOT, timerEvent);
                         break;
 
                     case 3:
                         // Stop indexer and finish shooting
                         robot.indexer.subsystemAction(Indexer.Action.STOP, null);
+                        robot.intake.subsystemAction(Intake.Action.STOP, null);
 
                         shootStep = 4;
-                        timer.set(0.5, timerEvent);
+                        timer.set(0.6, timerEvent);
                         sm.waitForEvents(State.SHOOT, timerEvent);
                         break;
 
                     case 4:
                         // Index again
                         robot.indexer.subsystemAction(Indexer.Action.INTAKE, null);
+                        robot.intake.subsystemAction(Intake.Action.INTAKE, null);
 
                         shootStep = 5;
-                        timer.set(0.5, timerEvent);
+                        timer.set(0.6, timerEvent);
                         sm.waitForEvents(State.SHOOT, timerEvent);
                         break;
 
                     case 5:
                         // Stop indexer and finish shooting
                         robot.indexer.subsystemAction(Indexer.Action.STOP, null);
+                        robot.intake.subsystemAction(Intake.Action.STOP, null);
 
                         shootStep = 6;
-                        timer.set(0.5, timerEvent);
+                        timer.set(0.6, timerEvent);
                         sm.waitForEvents(State.SHOOT, timerEvent);
                         break;
 
                     case 6:
                         // Index again
                         robot.indexer.subsystemAction(Indexer.Action.INTAKE, null);
+                        robot.intake.subsystemAction(Intake.Action.INTAKE, null);
 
                         shootStep = 7;
-                        timer.set(0.5, timerEvent);
+                        timer.set(0.6, timerEvent);
                         sm.waitForEvents(State.SHOOT, timerEvent);
                         break;
 
@@ -165,19 +182,19 @@ public class BaseAuto implements TrcRobot.RobotCommand {
 
             case DRIVE_FORWARD:
                 robot.robotBase.driveBase.holonomicDrive(
-                        0.0, 0.4, 0.0, 1.0, driveEvent);
-                sm.waitForEvents(State.TURN_LEFT, driveEvent);
+                        0.0, 0.4, 0.0, 2.8, driveEvent);
+                sm.waitForEvents(State.TURN_RIGHT, driveEvent);
                 break;
 
-            case TURN_LEFT:
+            case TURN_RIGHT:
                 robot.robotBase.driveBase.holonomicDrive(
-                        0.0,0.0,0.3, 0.8, driveEvent);
+                        0.0,0.0,-0.31, 0.8, driveEvent);
                 sm.waitForEvents(State.DRIVE_TO_PARK, driveEvent);
                 break;
 
             case DRIVE_TO_PARK:
                 robot.robotBase.driveBase.holonomicDrive(
-                    0.0, 0.6, 0.0, 2.0, driveEvent);
+                    0.0, 0.4, 0.0, 2.0, driveEvent);
                 sm.waitForEvents(State.DONE, driveEvent);
                 break;
 

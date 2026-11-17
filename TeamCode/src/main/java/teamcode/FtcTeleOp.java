@@ -331,7 +331,7 @@ public class FtcTeleOp extends FtcOpMode
                 if(pressed) {
                     robot.shooter.subsystemAction(Shooter.Action.SHOOT, null);
                 } else {
-                    robot.shooter.subsystemAction(Shooter.Action.STOP, null);
+                    robot.shooter.subsystemAction(Shooter.Action.IDLE, null);
                 }
                break;
 

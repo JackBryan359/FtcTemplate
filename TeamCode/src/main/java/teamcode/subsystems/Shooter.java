@@ -69,12 +69,16 @@ public class Shooter extends TrcSubsystem<Shooter.Action> {
     }
 
     private boolean atSpeed(double speed, double range) {
-        return (shooter.getShooter().getShooterMotor1Velocity() > (speed-range))
-                && (shooter.getShooter().getShooterMotor1Velocity() < (speed+range));
+        return (shooter.getShooter().getShooterMotor1Power() > (speed-range))
+                && (shooter.getShooter().getShooterMotor1Power() < (speed+range));
+    }
+
+    private boolean pastSpeed(double speed, double range) {
+        return (shooter.getShooter().getShooterMotor1Power() > (speed-range));
     }
 
     public boolean atShootingSpeed() {
-        return atSpeed(ShooterConstants.SHOOTING_SPEED, 0.05);
+        return pastSpeed(ShooterConstants.SHOOTING_SPEED, 0.02);
     }
 
     /** Rev/Sec */
