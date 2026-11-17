@@ -298,7 +298,7 @@ public class FtcTeleOp extends FtcOpMode
                 if(pressed) {
                     shoot(pressed, true);
                 } else {
-                    robot.indexer.subsystemAction(Indexer.Action.STOP, null);
+                    robot.intake.subsystemAction(Intake.Action.STOP, null);
                 }
                 break;
 
@@ -306,7 +306,7 @@ public class FtcTeleOp extends FtcOpMode
                 if(pressed) {
                     shoot(pressed, false);
                 } else {
-                    robot.indexer.subsystemAction(Indexer.Action.STOP, null);
+                    robot.intake.subsystemAction(Intake.Action.STOP, null);
                 }
                 break;
 

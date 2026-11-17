@@ -136,7 +136,7 @@ public class Robot
             {
                 intake = new Intake();
                 shooter = new Shooter();
-                indexer = new Indexer();
+//                indexer = new Indexer(); No index motor
 
                 // Zero calibrate all subsystems only in Auto or if TeleOp is run standalone without prior Auto.
                 // There is no reason to zero calibrate again if Auto was run right before TeleOp.
