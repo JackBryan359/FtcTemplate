@@ -291,11 +291,6 @@ public class FtcTeleOp extends FtcOpMode
                 break;
 
             case B:
-                if(pressed) {
-                    robot.shooter.subsystemAction(Shooter.Action.SHOOT, null);
-                } else {
-                    robot.shooter.subsystemAction(Shooter.Action.STOP, null);
-                }
                 break;
 
             case X:
@@ -333,6 +328,11 @@ public class FtcTeleOp extends FtcOpMode
                 break;
 
             case RightTrigger:
+                if(pressed) {
+                    robot.shooter.subsystemAction(Shooter.Action.SHOOT, null);
+                } else {
+                    robot.shooter.subsystemAction(Shooter.Action.STOP, null);
+                }
                break;
 
             case DpadUp:
